@@ -39,14 +39,14 @@ jobs:
       - name: Build Debug APK
         run: |
           ./gradlew :app:assembleDebug --stacktrace --no-daemon
+          ls -la app/build/outputs/apk/debug/ || ls -la app/build/outputs/apk/ || true
 
       - name: Upload Debug APK Artifact
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ChatsPapai-Debug-APK
-          path: app/build/outputs/apk/debug/
-          if-no-files-found: warn
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
           retention-days: 14
 
       - name: Run Unit Tests
